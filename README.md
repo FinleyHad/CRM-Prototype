@@ -1,12 +1,29 @@
 # CS1OP-CW1
+
+## Profile
 Module Code:  CS1OP
-                       Assignment report Title:   Project  
-       Student Number (e.g. 25098635):
-   Actual hrs spent for the assignment: 
+
+Assignment report Title:   Project  
+
+Student Number (e.g. 25098635):
+
+Actual hrs spent for the assignment: 
+
 Which Artificial Intelligence tools used (if applicable):
 
+## Diagram
 
-
+```mermaid
+---
+config:
+      theme: redux
+---
+flowchart TD
+        A(["Start"])
+        A --> B{"Decision"}
+        B --> C["Option A"]
+        B --> D["Option B"]
+```
 
 ## Getting started
 
