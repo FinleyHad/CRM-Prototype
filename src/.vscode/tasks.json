@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compile with Maven (local)",
+      "type": "shell",
+      "command": "C:/Users/finle/Downloads/apache-maven-3.9.9/bin/mvn.cmd",
+      "args": [
+        "compile"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run with Maven (local)",
+      "type": "shell",
+      "command": "C:/Users/finle/Downloads/apache-maven-3.9.9/bin/mvn.cmd",
+      "args": [
+        "exec:java",
+        "-Dexec.mainClass=com.crm.Server"  // change if your class is different
+      ],
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

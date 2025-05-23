@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Communication Log</title>
+  <link rel="stylesheet" href="CRMInterface.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Communication Log</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="customers.html">Customers</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+      </ul>
+    </nav>
+
+    <h2>Add Communication</h2>
+    <select id="commCustomerId"></select>
+    <input id="commType" placeholder="Type (email, call)">
+    <input id="commContent" placeholder="Content">
+    <input id="commDate" placeholder="Date (YYYY-MM-DD)">
+    <button onclick="addCommunication()">Add Communication</button>
+
+    <h2>Communication History</h2>
+    <div class="chat-thread" id="commList"></div>
+  </div>
+
+  <script>
+    async function addCommunication() {
+      const type = document.getElementById('commType').value;
+      const content = document.getElementById('commContent').value;
+      const date = document.getElementById('commDate').value;
+      const customerId = parseInt(document.getElementById('commCustomerId').value);
+
+      await fetch('/api/communications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, content, date, customerId })
+      });
+
+      loadCommunications();
+    }
+
+    async function loadCommunications() {
+      const res = await fetch('/api/communications');
+      const data = await res.json();
+      const thread = document.getElementById('commList');
+      thread.innerHTML = '';
+
+      data.forEach(c => {
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble' + (c.type === 'email' ? ' user' : '');
+
+        const content = document.createElement('div');
+        content.textContent = c.content;
+        bubble.appendChild(content);
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        meta.textContent = `${c.type} • ${c.date} • Customer ID: ${c.customerId}`;
+        bubble.appendChild(meta);
+
+        thread.appendChild(bubble);
+      });
+    }
+
+    async function populateCustomerDropdown() {
+      const res = await fetch('/api/customers');
+      const customers = await res.json();
+      const select = document.getElementById('commCustomerId');
+      select.innerHTML = '';
+
+      customers.forEach(c => {
+        const option = document.createElement('option');
+        option.value = c.id;
+        option.textContent = `${c.id}: ${c.name}`;
+        select.appendChild(option);
+      });
+    }
+
+    window.onload = () => {
+      loadCommunications();
+      populateCustomerDropdown();
+    };
+  </script>
+</body>
+</html>

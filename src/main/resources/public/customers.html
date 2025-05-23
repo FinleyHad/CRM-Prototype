@@ -1,0 +1,75 @@
+<!-- customers.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Management</title>
+  <link rel="stylesheet" href="CRMInterface.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Customer Management</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="communications.html">Communications</a></li>
+      </ul>
+    </nav>
+    <h2>Add Customer</h2>
+    <input id="name" placeholder="Name">
+    <input id="email" placeholder="Email">
+    <input id="phone" placeholder="Phone">
+    <button onclick="addCustomer()">Add Customer</button>
+
+    <h2>Customer List</h2>
+    <ul id="customerList"></ul>
+  </div>
+
+  <script>
+    async function populateCustomerDropdown(dropdownId) {
+        const res = await fetch('/api/customers');
+        const customers = await res.json();
+        const select = document.getElementById(dropdownId);
+        select.innerHTML = '';
+
+        customers.forEach(c => {
+        const option = document.createElement('option');
+        option.value = c.id;
+        option.textContent = `${c.id}: ${c.name}`;
+        select.appendChild(option);
+        });
+    }
+  </script>
+
+  <script>
+    async function addCustomer() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      await fetch('/api/customers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone })
+      });
+
+      loadCustomers();
+    }
+
+    async function loadCustomers() {
+      const res = await fetch('/api/customers');
+      const data = await res.json();
+      const list = document.getElementById('customerList');
+      list.innerHTML = '';
+      data.forEach(c => {
+        const li = document.createElement('li');
+        li.textContent = `${c.id}: ${c.name} (${c.email}, ${c.phone})`;
+        list.appendChild(li);
+      });
+    }
+
+    window.onload = loadCustomers;
+  </script>
+</body>
+</html>

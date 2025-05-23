@@ -1,0 +1,10 @@
+com\crm\TaskNotifier.class
+com\crm\Main$1.class
+com\crm\Customer.class
+com\crm\Task.class
+com\crm\TaskObserver.class
+com\crm\Main.class
+com\crm\Report.class
+com\crm\Communication.class
+com\crm\EntityFactory.class
+com\crm\CRMSystem.class

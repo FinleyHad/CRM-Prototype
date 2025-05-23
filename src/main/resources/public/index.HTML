@@ -1,0 +1,81 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CRM Dashboard</title>
+  <link rel="stylesheet" href="CRMInterface.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the CRM Dashboard</h1>
+    <nav>
+      <ul>
+        <li><a href="customers.html">Customers</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="communications.html">Communications</a></li>
+      </ul>
+    </nav>
+
+    <h2>Overview</h2>
+    <pre id="overviewReport">Loading report...</pre>
+
+    <h2>View Tasks</h2>
+    <div id="taskOverview" class="task-grid">
+      <div>
+        <h3>Upcoming</h3>
+        <ul id="upcomingTasks"></ul>
+      </div>
+      <div>
+        <h3>Completed</h3>
+        <ul id="completedTasks"></ul>
+      </div>
+      <div>
+        <h3>Overdue</h3>
+        <ul id="overdueTasks"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadReport() {
+      const res = await fetch('/api/report');
+      const reportText = await res.text();
+      document.getElementById('overviewReport').textContent = reportText;
+    }
+
+    async function loadTaskOverview() {
+      const res = await fetch('/api/tasks');
+      const tasks = await res.json();
+      const now = new Date();
+
+      const upcoming = document.getElementById('upcomingTasks');
+      const completed = document.getElementById('completedTasks');
+      const overdue = document.getElementById('overdueTasks');
+
+      upcoming.innerHTML = '';
+      completed.innerHTML = '';
+      overdue.innerHTML = '';
+
+      tasks.forEach(t => {
+        const due = new Date(t.dueDate);
+        const li = document.createElement('li');
+        li.textContent = `${t.description} (Due: ${t.dueDate})`;
+
+        if (t.completed) {
+          completed.appendChild(li);
+        } else if (due < now) {
+          overdue.appendChild(li);
+        } else {
+          upcoming.appendChild(li);
+        }
+      });
+    }
+
+    window.onload = () => {
+      loadReport();
+      loadTaskOverview();
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Management</title>
+  <link rel="stylesheet" href="CRMInterface.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Task Management</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="customers.html">Customers</a></li>
+        <li><a href="communications.html">Communications</a></li>
+      </ul>
+    </nav>
+
+    <section>
+      <h2>Add Task</h2>
+      <div class="form-group">
+        <select id="taskCustomerId"></select>
+        <input id="taskDesc" placeholder="Task Description">
+        <input id="taskDue" placeholder="Due Date (YYYY-MM-DD)">
+        <button onclick="addTask()">Add Task</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Task List</h2>
+      <ul id="taskList"></ul>
+    </section>
+  </div>
+
+  <script>
+    async function addTask() {
+      const description = document.getElementById('taskDesc').value;
+      const dueDate = document.getElementById('taskDue').value;
+      const customerId = parseInt(document.getElementById('taskCustomerId').value);
+
+      await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description, dueDate, customerId })
+      });
+
+      loadTasks();
+    }
+
+    async function loadTasks() {
+      const res = await fetch('/api/tasks');
+      const data = await res.json();
+      const list = document.getElementById('taskList');
+      list.innerHTML = '';
+      data.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = `${t.description} (Due: ${t.dueDate}) [Customer ID: ${t.customerId}]`;
+        list.appendChild(li);
+      });
+    }
+
+    async function populateCustomerDropdown() {
+      const res = await fetch('/api/customers');
+      const customers = await res.json();
+      const select = document.getElementById('taskCustomerId');
+      select.innerHTML = '';
+
+      customers.forEach(c => {
+        const option = document.createElement('option');
+        option.value = c.id;
+        option.textContent = `${c.id}: ${c.name}`;
+        select.appendChild(option);
+      });
+    }
+
+    window.onload = () => {
+      loadTasks();
+      populateCustomerDropdown();
+    };
+  </script>
+</body>
+</html>
