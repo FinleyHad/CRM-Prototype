@@ -53,4 +53,6 @@ public class Customer {
         String timestampedNote = "(" + java.time.LocalDateTime.now() + ")" + note;
         notes.add(timestampedNote);
     }
+
+    
 }

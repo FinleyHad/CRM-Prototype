@@ -11,7 +11,11 @@ public class CRMSystem {
 
     //Singelton class allows for a single instance of the system
     private CRMSystem() 
-    {}
+    {
+        customers = new ArrayList<>();
+        tasks = new ArrayList<>();
+        communications = new ArrayList<>();
+    }
 
     //Allows other classes to get the instance of the system
     public static CRMSystem getInstance() 
@@ -110,5 +114,10 @@ public class CRMSystem {
         }
         return communications;
     }
+    public void removeCustomerById(int id) 
+    {
+        customers.removeIf(c -> c.getId() == id);
+    }
+
 
 }   

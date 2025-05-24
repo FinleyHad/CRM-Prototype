@@ -1,52 +1,44 @@
 package com.crm;
+
 import java.time.LocalDate;
 
-public class Task 
-{
-    private static int nextID = 1;
+public class Task {
+    private static int nextId = 1;
     private final int id;
     private final String description;
     private final LocalDate dueDate;
+    private final int customerId;
     private boolean completed;
-    private final int customerID;
 
-    //Constructer that defines a task
-    public Task(String description, LocalDate dueDate, int customerId) 
-    {
-        this.id = nextID++;
+    public Task(String description, LocalDate dueDate, int customerId) {
+        this.id = nextId++;
         this.description = description;
         this.dueDate = dueDate;
-        this.customerID = customerId;
+        this.customerId = customerId;
         this.completed = false;
     }
 
-    public int getId() 
-    {
+    public int getId() {
         return id;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public LocalDate getDueDate() 
-    {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public boolean isCompleted() 
-    {
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public boolean isCompleted() {
         return completed;
     }
 
-    public int getCustomerId() 
-    {
-        return customerID;
+    public void completeTask() {
+        this.completed = true;
     }
-
-    public void completeTask() 
-    {
-       this.completed = true; 
-    }
-}
+} 

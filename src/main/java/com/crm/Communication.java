@@ -1,62 +1,41 @@
 package com.crm;
-import java.time.LocalDate;
-import java.util.List;
 
-public class Communication 
-{
-    //Information on the entity being added
+import java.time.LocalDate;
+
+public class Communication {
     private static int nextId = 1;
     private final int id;
     private final String type;
+    private final String content;
     private final LocalDate date;
-    private final String notes;
-    private final List<String> tags;
     private final int customerId;
 
-    //Allows for set interaction between the bussines and costumer
-    public Communication(String type, LocalDate date, String notes, List<String> tags, int customerId) 
+    public Communication(String type, String content, LocalDate date, int customerId) 
     {
         this.id = nextId++;
         this.type = type;
+        this.content = content;
         this.date = date;
-        this.notes = notes;
-        this.tags = tags;
         this.customerId = customerId;
     }
 
-    public int getId() 
-    {
+    public int getId() {
         return id;
     }
 
-    public String getType() 
-    {
+    public String getType() {
         return type;
     }
 
-    public LocalDate getDate() 
-    {
+    public String getContent() {
+        return content;
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public String getNotes() 
-    {
-        return notes;
-    }
-
-    public List<String> getTags() 
-    {
-        return tags;
-    }
-
-    public int getCustomerId() 
-    {
+    public int getCustomerId() {
         return customerId;
     }
-    
-    @Override
-    public String toString() {
-        return String.format("Communication #%d: %s with Customer %d on %s\nTags: %s\nNotes: %s\n",
-                id, type, customerId, date, tags.toString(), notes);
-    }
-}
+} 

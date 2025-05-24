@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <title>Communication Log</title>
   <link rel="stylesheet" href="CRMInterface.css">
+  <style>
+    .chat-bubble {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      background: #f9f9f9;
+    }
+    .meta {
+      font-size: 0.9em;
+      color: gray;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -20,19 +33,38 @@
     <select id="commCustomerId"></select>
     <input id="commType" placeholder="Type (email, call)">
     <input id="commContent" placeholder="Content">
-    <input id="commDate" placeholder="Date (YYYY-MM-DD)">
+    <input id="commDate" type="date" placeholder="Date">
     <button onclick="addCommunication()">Add Communication</button>
 
     <h2>Communication History</h2>
-    <div class="chat-thread" id="commList"></div>
+    <div id="commList"></div>
   </div>
 
   <script>
+    async function loadCustomers(selectId) {
+      const res = await fetch('/api/customers');
+      const data = await res.json();
+      const select = document.getElementById(selectId);
+      select.innerHTML = '';
+
+      data.forEach(customer => {
+        const option = document.createElement('option');
+        option.value = customer.id;
+        option.textContent = customer.name;
+        select.appendChild(option);
+      });
+    }
+
     async function addCommunication() {
       const type = document.getElementById('commType').value;
       const content = document.getElementById('commContent').value;
       const date = document.getElementById('commDate').value;
       const customerId = parseInt(document.getElementById('commCustomerId').value);
+
+      if (!type || !content || !date || isNaN(customerId)) {
+        alert('Please fill out all fields.');
+        return;
+      }
 
       await fetch('/api/communications', {
         method: 'POST',
@@ -44,46 +76,44 @@
     }
 
     async function loadCommunications() {
+      console.log("📨 Fetching communications...");
+      
       const res = await fetch('/api/communications');
       const data = await res.json();
-      const thread = document.getElementById('commList');
-      thread.innerHTML = '';
+      console.log("✅ Received communications:", data);
+
+      const list = document.getElementById('commList');
+      if (!list) {
+        console.error("❌ ERROR: Element with id 'commList' not found in DOM.");
+        return;
+      }
+
+      list.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        list.innerHTML = '<p>No communications found.</p>';
+        return;
+      }
 
       data.forEach(c => {
-        const bubble = document.createElement('div');
-        bubble.className = 'chat-bubble' + (c.type === 'email' ? ' user' : '');
-
-        const content = document.createElement('div');
-        content.textContent = c.content;
-        bubble.appendChild(content);
-
-        const meta = document.createElement('div');
-        meta.className = 'meta';
-        meta.textContent = `${c.type} • ${c.date} • Customer ID: ${c.customerId}`;
-        bubble.appendChild(meta);
-
-        thread.appendChild(bubble);
+        const item = document.createElement('div');
+        item.className = 'chat-bubble';
+        item.innerHTML = `
+          <strong>${c.type}</strong><br>
+          ${c.content}<br>
+          <div class="meta">${new Date(c.date).toLocaleDateString()}</div>
+        `;
+        list.appendChild(item);
       });
     }
 
-    async function populateCustomerDropdown() {
-      const res = await fetch('/api/customers');
-      const customers = await res.json();
-      const select = document.getElementById('commCustomerId');
-      select.innerHTML = '';
-
-      customers.forEach(c => {
-        const option = document.createElement('option');
-        option.value = c.id;
-        option.textContent = `${c.id}: ${c.name}`;
-        select.appendChild(option);
-      });
-    }
-
-    window.onload = () => {
+    window.onload = () => 
+    {
+      console.log("📄 Page loaded");
+      loadCustomers('commCustomerId');
       loadCommunications();
-      populateCustomerDropdown();
     };
+
   </script>
 </body>
 </html>

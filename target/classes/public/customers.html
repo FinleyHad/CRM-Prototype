@@ -1,10 +1,23 @@
-<!-- customers.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Customer Management</title>
   <link rel="stylesheet" href="CRMInterface.css">
+  <style>
+    .customer-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding: 6px;
+      border-bottom: 1px solid #ccc;
+    }
+    .delete-btn {
+      color: red;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -16,37 +29,51 @@
         <li><a href="communications.html">Communications</a></li>
       </ul>
     </nav>
+
     <h2>Add Customer</h2>
-    <input id="name" placeholder="Name">
-    <input id="email" placeholder="Email">
-    <input id="phone" placeholder="Phone">
+    <input id="custName" placeholder="Name">
+    <input id="custEmail" placeholder="Email">
+    <input id="custPhone" placeholder="Phone">
     <button onclick="addCustomer()">Add Customer</button>
 
     <h2>Customer List</h2>
-    <ul id="customerList"></ul>
+    <div id="customerList"></div>
   </div>
 
   <script>
-    async function populateCustomerDropdown(dropdownId) {
-        const res = await fetch('/api/customers');
-        const customers = await res.json();
-        const select = document.getElementById(dropdownId);
-        select.innerHTML = '';
+    async function loadCustomers() {
+      const res = await fetch('/api/customers');
+      const data = await res.json();
+      const list = document.getElementById('customerList');
+      list.innerHTML = '';
 
-        customers.forEach(c => {
-        const option = document.createElement('option');
-        option.value = c.id;
-        option.textContent = `${c.id}: ${c.name}`;
-        select.appendChild(option);
-        });
+      data.forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'customer-item';
+
+        const info = document.createElement('span');
+        info.textContent = `${c.name} (${c.email}, ${c.phone})`;
+
+        const delBtn = document.createElement('span');
+        delBtn.className = 'delete-btn';
+        delBtn.textContent = '❌';
+        delBtn.onclick = () => deleteCustomer(c.id);
+
+        item.appendChild(info);
+        item.appendChild(delBtn);
+        list.appendChild(item);
+      });
     }
-  </script>
 
-  <script>
     async function addCustomer() {
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
+      const name = document.getElementById('custName').value;
+      const email = document.getElementById('custEmail').value;
+      const phone = document.getElementById('custPhone').value;
+
+      if (!name || !email || !phone) {
+        alert('Please fill out all fields.');
+        return;
+      }
 
       await fetch('/api/customers', {
         method: 'POST',
@@ -57,16 +84,9 @@
       loadCustomers();
     }
 
-    async function loadCustomers() {
-      const res = await fetch('/api/customers');
-      const data = await res.json();
-      const list = document.getElementById('customerList');
-      list.innerHTML = '';
-      data.forEach(c => {
-        const li = document.createElement('li');
-        li.textContent = `${c.id}: ${c.name} (${c.email}, ${c.phone})`;
-        list.appendChild(li);
-      });
+    async function deleteCustomer(id) {
+      await fetch(`/api/customers/${id}`, { method: 'DELETE' });
+      loadCustomers();
     }
 
     window.onload = loadCustomers;

@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <title>Task Management</title>
   <link rel="stylesheet" href="CRMInterface.css">
+  <style>
+    ul#taskList {
+      padding: 0;
+      list-style: none;
+    }
+    #taskList li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      background: #f9f9f9;
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -21,7 +33,7 @@
       <div class="form-group">
         <select id="taskCustomerId"></select>
         <input id="taskDesc" placeholder="Task Description">
-        <input id="taskDue" placeholder="Due Date (YYYY-MM-DD)">
+        <input id="taskDue" type="date" placeholder="Due Date">
         <button onclick="addTask()">Add Task</button>
       </div>
     </section>
@@ -33,10 +45,29 @@
   </div>
 
   <script>
+    async function loadCustomers(selectId) {
+      const res = await fetch('/api/customers');
+      const data = await res.json();
+      const select = document.getElementById(selectId);
+      select.innerHTML = '';
+
+      data.forEach(customer => {
+        const option = document.createElement('option');
+        option.value = customer.id;
+        option.textContent = customer.name;
+        select.appendChild(option);
+      });
+    }
+
     async function addTask() {
       const description = document.getElementById('taskDesc').value;
       const dueDate = document.getElementById('taskDue').value;
       const customerId = parseInt(document.getElementById('taskCustomerId').value);
+
+      if (!description || !dueDate || isNaN(customerId)) {
+        alert('Please fill out all fields.');
+        return;
+      }
 
       await fetch('/api/tasks', {
         method: 'POST',
@@ -52,30 +83,22 @@
       const data = await res.json();
       const list = document.getElementById('taskList');
       list.innerHTML = '';
-      data.forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = `${t.description} (Due: ${t.dueDate}) [Customer ID: ${t.customerId}]`;
-        list.appendChild(li);
-      });
-    }
 
-    async function populateCustomerDropdown() {
-      const res = await fetch('/api/customers');
-      const customers = await res.json();
-      const select = document.getElementById('taskCustomerId');
-      select.innerHTML = '';
+      if (data.length === 0) {
+        list.innerHTML = '<li>No tasks found.</li>';
+        return;
+      }
 
-      customers.forEach(c => {
-        const option = document.createElement('option');
-        option.value = c.id;
-        option.textContent = `${c.id}: ${c.name}`;
-        select.appendChild(option);
+      data.forEach(task => {
+        const item = document.createElement('li');
+        item.textContent = `${task.description} — Due: ${new Date(task.dueDate).toLocaleDateString()}`;
+        list.appendChild(item);
       });
     }
 
     window.onload = () => {
+      loadCustomers('taskCustomerId');
       loadTasks();
-      populateCustomerDropdown();
     };
   </script>
 </body>
