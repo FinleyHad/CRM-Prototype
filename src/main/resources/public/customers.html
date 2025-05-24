@@ -5,7 +5,8 @@
   <title>Customer Management</title>
   <link rel="stylesheet" href="CRMInterface.css">
   <style>
-    .customer-item {
+    .customer-item 
+    {
       display: flex;
       justify-content: space-between;
       margin-bottom: 8px;
@@ -21,6 +22,7 @@
 </head>
 <body>
   <div class="container">
+    // Navigation bar
     <h1>Customer Management</h1>
     <nav>
       <ul>
@@ -30,18 +32,22 @@
       </ul>
     </nav>
 
+    // Form to add a new customer
     <h2>Add Customer</h2>
     <input id="custName" placeholder="Name">
     <input id="custEmail" placeholder="Email">
     <input id="custPhone" placeholder="Phone">
     <button onclick="addCustomer()">Add Customer</button>
 
+    // List of customers
     <h2>Customer List</h2>
     <div id="customerList"></div>
   </div>
 
+  //JavaScript to handle loading customers and adding/deleting them
   <script>
-    async function loadCustomers() {
+    async function loadCustomers() 
+    {
       const res = await fetch('/api/customers');
       const data = await res.json();
       const list = document.getElementById('customerList');
@@ -56,7 +62,7 @@
 
         const delBtn = document.createElement('span');
         delBtn.className = 'delete-btn';
-        delBtn.textContent = '❌';
+        delBtn.textContent = 'X';
         delBtn.onclick = () => deleteCustomer(c.id);
 
         item.appendChild(info);
@@ -65,7 +71,8 @@
       });
     }
 
-    async function addCustomer() {
+    async function addCustomer() 
+    {
       const name = document.getElementById('custName').value;
       const email = document.getElementById('custEmail').value;
       const phone = document.getElementById('custPhone').value;
@@ -84,11 +91,13 @@
       loadCustomers();
     }
 
-    async function deleteCustomer(id) {
+    async function deleteCustomer(id) 
+    {
       await fetch(`/api/customers/${id}`, { method: 'DELETE' });
       loadCustomers();
     }
 
+    // Load customers when the page loads
     window.onload = loadCustomers;
   </script>
 </body>

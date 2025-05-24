@@ -10,6 +10,7 @@ public class Communication {
     private final LocalDate date;
     private final int customerId;
 
+    //Constructor for Communication
     public Communication(String type, String content, LocalDate date, int customerId) 
     {
         this.id = nextId++;
@@ -19,23 +20,29 @@ public class Communication {
         this.customerId = customerId;
     }
 
-    public int getId() {
+    //Getter methods for Communication
+    public int getId() 
+    {
         return id;
     }
 
-    public String getType() {
+    public String getType() 
+    {
         return type;
     }
 
-    public String getContent() {
+    public String getContent() 
+    {
         return content;
     }
 
-    public LocalDate getDate() {
+    public LocalDate getDate() 
+    {
         return date;
     }
 
-    public int getCustomerId() {
+    public int getCustomerId() 
+    {
         return customerId;
     }
 } 

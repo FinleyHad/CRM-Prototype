@@ -8,6 +8,8 @@
 </head>
 <body>
   <div class="container">
+
+    // Navigation bar
     <h1>Welcome to the CRM Dashboard</h1>
     <nav>
       <ul>
@@ -17,9 +19,11 @@
       </ul>
     </nav>
 
+    // Form to add a new customer
     <h2>Overview</h2>
     <pre id="overviewReport">Loading report...</pre>
 
+    // Form to add a new task
     <h2>View Tasks</h2>
     <div id="taskOverview" class="task-grid">
       <div>
@@ -37,14 +41,17 @@
     </div>
   </div>
 
+  // JavaScript to handle loading the report and task overview
   <script>
-    async function loadReport() {
+    async function loadReport() 
+    {
       const res = await fetch('/api/report');
       const reportText = await res.text();
       document.getElementById('overviewReport').textContent = reportText;
     }
 
-    async function loadTaskOverview() {
+    async function loadTaskOverview() 
+    {
       const res = await fetch('/api/tasks');
       const tasks = await res.json();
       const now = new Date();
@@ -62,16 +69,22 @@
         const li = document.createElement('li');
         li.textContent = `${t.description} (Due: ${t.dueDate})`;
 
-        if (t.completed) {
+        if (t.completed) 
+        {
           completed.appendChild(li);
-        } else if (due < now) {
+        } 
+        else if (due < now) 
+        {
           overdue.appendChild(li);
-        } else {
+        } 
+        else 
+        {
           upcoming.appendChild(li);
         }
       });
     }
 
+    // Load the report and task overview when the page loads
     window.onload = () => {
       loadReport();
       loadTaskOverview();

@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Communication Log</title>
   <link rel="stylesheet" href="CRMInterface.css">
+
+  // Seperate formating for the communication log
   <style>
     .chat-bubble {
       padding: 10px;
@@ -17,9 +19,12 @@
       color: gray;
     }
   </style>
+
 </head>
 <body>
   <div class="container">
+
+    // Navigation bar
     <h1>Communication Log</h1>
     <nav>
       <ul>
@@ -29,6 +34,7 @@
       </ul>
     </nav>
 
+    // Form to add a new communication
     <h2>Add Communication</h2>
     <select id="commCustomerId"></select>
     <input id="commType" placeholder="Type (email, call)">
@@ -36,10 +42,12 @@
     <input id="commDate" type="date" placeholder="Date">
     <button onclick="addCommunication()">Add Communication</button>
 
+    // List of communications
     <h2>Communication History</h2>
     <div id="commList"></div>
   </div>
 
+  //JavaScript to handle loading customers and communications
   <script>
     async function loadCustomers(selectId) {
       const res = await fetch('/api/customers');
@@ -55,6 +63,7 @@
       });
     }
 
+    // Function to add a new communication from the form
     async function addCommunication() {
       const type = document.getElementById('commType').value;
       const content = document.getElementById('commContent').value;
@@ -75,16 +84,17 @@
       loadCommunications();
     }
 
+    // Function to load and display the list of communications from the server
     async function loadCommunications() {
-      console.log("📨 Fetching communications...");
+      console.log("Fetching communications...");
       
       const res = await fetch('/api/communications');
       const data = await res.json();
-      console.log("✅ Received communications:", data);
+      console.log("Received communications:", data);
 
       const list = document.getElementById('commList');
       if (!list) {
-        console.error("❌ ERROR: Element with id 'commList' not found in DOM.");
+        console.error("ERROR: Element with id 'commList' not found in DOM.");
         return;
       }
 
@@ -107,9 +117,10 @@
       });
     }
 
+    // Load customers and communications when the page loads
     window.onload = () => 
     {
-      console.log("📄 Page loaded");
+      console.log("Page loaded");
       loadCustomers('commCustomerId');
       loadCommunications();
     };

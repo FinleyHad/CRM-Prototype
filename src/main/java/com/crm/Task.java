@@ -10,7 +10,9 @@ public class Task {
     private final int customerId;
     private boolean completed;
 
-    public Task(String description, LocalDate dueDate, int customerId) {
+    // Constructor for Task
+    public Task(String description, LocalDate dueDate, int customerId) 
+    {
         this.id = nextId++;
         this.description = description;
         this.dueDate = dueDate;
@@ -18,27 +20,34 @@ public class Task {
         this.completed = false;
     }
 
-    public int getId() {
+    // Getters needed for Gson to serialize
+    public int getId() 
+    {
         return id;
     }
 
-    public String getDescription() {
+    public String getDescription() 
+    {
         return description;
     }
 
-    public LocalDate getDueDate() {
+    public LocalDate getDueDate() 
+    {
         return dueDate;
     }
 
-    public int getCustomerId() {
+    public int getCustomerId() 
+    {
         return customerId;
     }
 
-    public boolean isCompleted() {
+    public boolean isCompleted() 
+    {
         return completed;
     }
 
-    public void completeTask() {
+    public void completeTask() 
+    {
         this.completed = true;
     }
 } 

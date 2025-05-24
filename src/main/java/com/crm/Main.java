@@ -16,8 +16,8 @@ import static spark.Spark.staticFiles;
 
 public class Main {
     public static void main(String[] args) {
-        port(4567);
-        staticFiles.location("public");
+        port(4567); //Web server port
+        staticFiles.location("public"); 
 
         //GsonBuilder with TypeAdapters for LocalDate and LocalDateTime
         Gson gson = new GsonBuilder()
@@ -59,7 +59,7 @@ public class Main {
             CRMSystem.getInstance().removeCustomerById(id);
             return "Deleted";
         });
-
+        //
 
         // TASKS
         get("/api/tasks", (req, res) -> {
@@ -90,6 +90,7 @@ public class Main {
                 return "Task creation error: " + e.getMessage();
             }
         });
+        //
 
         // COMMUNICATIONS
         get("/api/communications", (req, res) -> {
@@ -136,6 +137,7 @@ public class Main {
             res.type("application/json");
             return new Gson().toJson(result);
         });
+        //
 
 
         // REPORT
@@ -150,7 +152,9 @@ public class Main {
             res.status(200);
             return "Report printed to console";
         });
+        //
 
+        //Gives the terminal the link to the web page
         System.out.println("CRM system running at http://localhost:4567");
     }
 }

@@ -4,21 +4,28 @@
   <meta charset="UTF-8">
   <title>Task Management</title>
   <link rel="stylesheet" href="CRMInterface.css">
+
   <style>
-    ul#taskList {
+    ul#taskList 
+    {
       padding: 0;
       list-style: none;
     }
-    #taskList li {
+    #taskList li 
+    {
       padding: 10px;
       border-bottom: 1px solid #ddd;
       background: #f9f9f9;
       margin-bottom: 5px;
     }
   </style>
+
 </head>
+
 <body>
   <div class="container">
+
+    // Navigation bar
     <h1>Task Management</h1>
     <nav>
       <ul>
@@ -28,6 +35,7 @@
       </ul>
     </nav>
 
+    // Form to add a new task
     <section>
       <h2>Add Task</h2>
       <div class="form-group">
@@ -38,14 +46,17 @@
       </div>
     </section>
 
+    // List of tasks
     <section>
       <h2>Task List</h2>
       <ul id="taskList"></ul>
     </section>
   </div>
 
+  // JavaScript to handle loading customers and tasks
   <script>
-    async function loadCustomers(selectId) {
+    async function loadCustomers(selectId) 
+    {
       const res = await fetch('/api/customers');
       const data = await res.json();
       const select = document.getElementById(selectId);
@@ -59,12 +70,14 @@
       });
     }
 
-    async function addTask() {
+    async function addTask() 
+    {
       const description = document.getElementById('taskDesc').value;
       const dueDate = document.getElementById('taskDue').value;
       const customerId = parseInt(document.getElementById('taskCustomerId').value);
 
-      if (!description || !dueDate || isNaN(customerId)) {
+      if (!description || !dueDate || isNaN(customerId)) 
+      {
         alert('Please fill out all fields.');
         return;
       }
@@ -78,13 +91,15 @@
       loadTasks();
     }
 
-    async function loadTasks() {
+    async function loadTasks() 
+    {
       const res = await fetch('/api/tasks');
       const data = await res.json();
       const list = document.getElementById('taskList');
       list.innerHTML = '';
 
-      if (data.length === 0) {
+      if (data.length === 0) 
+      {
         list.innerHTML = '<li>No tasks found.</li>';
         return;
       }
@@ -96,6 +111,8 @@
       });
     }
 
+
+    // Load customers and tasks when the page loads
     window.onload = () => {
       loadCustomers('taskCustomerId');
       loadTasks();

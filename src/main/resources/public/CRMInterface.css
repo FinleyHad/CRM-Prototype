@@ -1,11 +1,13 @@
 /* Reset & Base */
-* {
+* 
+{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+body 
+{
   font-family: 'Inter', 'Arial', sans-serif;
   background-color: #fafafa;
   color: #1a1a1a;
@@ -13,7 +15,8 @@ body {
   padding: 2rem;
 }
 
-.container {
+.container 
+{
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -23,14 +26,16 @@ body {
 }
 
 /* Headings */
-h1 {
+h1 
+{
   font-size: 2rem;
   font-weight: 600;
   text-align: center;
   margin-bottom: 2rem;
 }
 
-h2 {
+h2 
+{
   font-size: 1.25rem;
   font-weight: 500;
   text-align: center;
@@ -38,7 +43,8 @@ h2 {
 }
 
 /* Navigation */
-nav ul {
+nav ul 
+{
   display: flex;
   justify-content: center;
   gap: 1.5rem;
@@ -46,7 +52,8 @@ nav ul {
   margin: 1rem 0 2rem;
 }
 
-nav ul li a {
+nav ul li a 
+{
   text-decoration: none;
   color: #000000;
   font-weight: 500;
@@ -54,12 +61,14 @@ nav ul li a {
   border-radius: 6px;
 }
 
-nav ul li a:hover {
+nav ul li a:hover 
+{
   background-color: #e8f0fe;
 }
 
 /* Forms */
-input, button, select, textarea {
+input, button, select, textarea 
+{
   font: inherit;
   padding: 0.6rem 1rem;
   margin: 0.4rem 0.2rem;
@@ -69,31 +78,36 @@ input, button, select, textarea {
   transition: all 0.2s ease;
 }
 
-input:focus, button:focus {
+input:focus, button:focus 
+{
   outline: none;
   border-color: #000000;
   box-shadow: 0 0 0 2px rgba(46, 134, 222, 0.2);
 }
 
-button {
+button 
+{
   background-color: #000000;
   color: white;
   border: none;
   cursor: pointer;
 }
 
-button:hover {
+button:hover 
+{
   background-color: #333;
 }
 
 /* Lists & Display */
-ul {
+ul 
+{
   list-style: none;
   padding: 0;
   margin-top: 1rem;
 }
 
-ul li {
+ul li 
+{
   padding: 0.75rem;
   background: #f1f1f1;
   border-radius: 6px;
@@ -103,7 +117,8 @@ ul li {
   text-align: left;
 }
 
-pre {
+pre 
+{
   background: #f4f4f4;
   padding: 1rem;
   border-radius: 6px;
@@ -112,7 +127,8 @@ pre {
 }
 
 /* Communication Section */
-.chat-thread {
+.chat-thread 
+{
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -124,7 +140,8 @@ pre {
   border: 1px solid #e0e0e0;
 }
 
-.chat-bubble {
+.chat-bubble 
+{
   max-width: 100%;
   padding: 0.75rem 1rem;
   background: white;
@@ -135,43 +152,50 @@ pre {
   align-self: flex-start;
 }
 
-.chat-bubble.user {
+.chat-bubble.user 
+{
   background: #d7ebff;
   align-self: flex-end;
 }
 
-.chat-bubble .meta {
+.chat-bubble .meta 
+{
   font-size: 0.75rem;
   color: #777;
   margin-top: 0.4rem;
 }
 
-/* Optional grid/task display (not used in current HTML) */
-.task-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.task-grid h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  font-size: 0.85rem;
-  color: #aaa;
-  margin-top: 4rem;
-}
-
-#commList {
+#commList 
+{
   display: block !important;
   min-height: 100px;
   background: #f0f0f0;
   color: #111;
   border: 1px dashed #ccc;
   padding: 1rem;
+}
+
+
+/* Optional grid/task display (not used in current HTML) */
+.task-grid 
+{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.task-grid h3 
+{
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Footer */
+footer 
+{
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 4rem;
 }

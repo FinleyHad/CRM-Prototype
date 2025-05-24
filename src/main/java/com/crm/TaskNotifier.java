@@ -17,6 +17,7 @@ public class TaskNotifier
         observers.remove(observer);
     }
 
+    //Notifies the observers of a task
     public void notifyObservers(Task task) 
     {
         for (TaskObserver observer : observers) 
