@@ -22,7 +22,7 @@
 </head>
 <body>
   <div class="container">
-    // Navigation bar
+
     <h1>Customer Management</h1>
     <nav>
       <ul>
@@ -32,19 +32,19 @@
       </ul>
     </nav>
 
-    // Form to add a new customer
+    <!-- Form to add a new customer -->
     <h2>Add Customer</h2>
     <input id="custName" placeholder="Name">
     <input id="custEmail" placeholder="Email">
     <input id="custPhone" placeholder="Phone">
     <button onclick="addCustomer()">Add Customer</button>
 
-    // List of customers
+    <!-- List of customers -->
     <h2>Customer List</h2>
     <div id="customerList"></div>
   </div>
 
-  //JavaScript to handle loading customers and adding/deleting them
+  <!-- JavaScript to handle loading customers and adding/deleting -->
   <script>
     async function loadCustomers() 
     {

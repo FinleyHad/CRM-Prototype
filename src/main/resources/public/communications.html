@@ -5,7 +5,7 @@
   <title>Communication Log</title>
   <link rel="stylesheet" href="CRMInterface.css">
 
-  // Seperate formating for the communication log
+  <!-- Seperate formating for the communication log -->
   <style>
     .chat-bubble {
       padding: 10px;
@@ -24,7 +24,7 @@
 <body>
   <div class="container">
 
-    // Navigation bar
+    <!-- Navigation bar -->
     <h1>Communication Log</h1>
     <nav>
       <ul>
@@ -34,7 +34,7 @@
       </ul>
     </nav>
 
-    // Form to add a new communication
+    <!-- Form to add a new communication -->
     <h2>Add Communication</h2>
     <select id="commCustomerId"></select>
     <input id="commType" placeholder="Type (email, call)">
@@ -42,12 +42,12 @@
     <input id="commDate" type="date" placeholder="Date">
     <button onclick="addCommunication()">Add Communication</button>
 
-    // List of communications
+    <!-- List of communications -->
     <h2>Communication History</h2>
     <div id="commList"></div>
   </div>
 
-  //JavaScript to handle loading customers and communications
+  <!-- JavaScript to handle loading customers and communications -->
   <script>
     async function loadCustomers(selectId) {
       const res = await fetch('/api/customers');
