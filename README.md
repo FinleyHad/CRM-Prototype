@@ -12,7 +12,8 @@ The rewritten markdown content that would fit at $SELECTION_PLACEHOLDER$ is:
 - **AI Tools Used:** OpenAI/ChatGPT and GitHub Copilot  
 
 **Note to run the program on one line use: mvn -f "pom.xml" clean compile, and the next: mvn -f "pom.xml" exec:java**
-Implementation Highlights
+
+**Implementation Highlights**
 
 In the Customer Relations Manager program, the use of Java and HTML as an interface greatly influenced my design format. Due to the need for front-to-backend support, JavaScript was implemented for functionality, and CSS was used on the frontend to help style the Customer Relations Management pages. The CRM (Customer Relationship Management) system was used as a package across each Java file. As Java was integrated with JavaScript, my Main class pulled data from the CRMSystem, which linked to all of the other object classes.
 
