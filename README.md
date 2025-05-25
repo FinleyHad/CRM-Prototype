@@ -3,84 +3,86 @@
 ## Profile
 Module Code:  CS1OP
 
-Assignment report Title:   Project  
+Assignment report Title:CS1OP-CW1
 
-Student Number (e.g. 25098635):
+Student Number (33003767):
 
-Actual hrs spent for the assignment: 
+Actual hrs spent for the assignment: 30
 
-Which Artificial Intelligence tools used (if applicable):
+Which Artificial Intelligence tools used (if applicable):OpenAI/ChaGPT and 
 
 ## Diagram
 
 ```mermaid
-classDiagram
-    class CRMSystem 
-    {
-        - List~Customer~ customers
-        - List~Task~ tasks
-        - List~Communication~ communications
-        + getInstance() CRMSystem
-        + addCustomer(Customer)
-        + createTask(Task)
-        + createCommunication(Communication)
-        + getCustomers() List~Customer~
-        + getTasks() List~Task~
-        + getCommunications() List~Communication~
-        + registerObserver(TaskObserver)
-    }
+---
+config:
+      theme: redux
+---
+flowchart TD
+        flowchart TD
+    A(["CRMSystem"])
+    B(["Customer"])
+    C(["Task"])
+    D(["Communication"])
+    E(["TaskObserver (interface)"])
+    F(["TaskNotifier"])
 
-    class Customer 
-    {
-        - int id
-        - String name
-        - String email
-        - String phone
-        + getId()
-        + getName()
-        + getEmail()
-        + getPhone()
-    }
+    subgraph CRMSystem Members
+      A1["- List<Customer> customers"]
+      A2["- List<Task> tasks"]
+      A3["- List<Communication> communications"]
+      A4["+ getInstance(): CRMSystem"]
+      A5["+ addCustomer(Customer)"]
+      A6["+ createTask(Task)"]
+      A7["+ createCommunication(Communication)"]
+      A8["+ getCustomers(): List<Customer>"]
+      A9["+ getTasks(): List<Task>"]
+      A10["+ getCommunications(): List<Communication>"]
+      A11["+ registerObserver(TaskObserver)"]
+    end
 
-    class Task 
-    {
-        - String description
-        - LocalDate dueDate
-        - int customerId
-        - boolean completed
-        + isCompleted()
-        + getDueDate()
-    }
+    subgraph Customer
+      B1["- id: int"]
+      B2["- name: String"]
+      B3["- email: String"]
+      B4["- phone: String"]
+      B5["+ getId(), getName(), getEmail(), getPhone()"]
+    end
 
-    class Communication 
-    {
-        - String type
-        - String content
-        - LocalDate date
-        - int customerId
-        + getCustomerId()
-    }
+    subgraph Task
+      C1["- description: String"]
+      C2["- dueDate: LocalDate"]
+      C3["- customerId: int"]
+      C4["- completed: boolean"]
+      C5["+ isCompleted(), getDueDate()"]
+    end
 
-    class TaskObserver 
-    {
-        <<interface>>
-        + notify(Task)
-    }
+    subgraph Communication
+      D1["- type: String"]
+      D2["- content: String"]
+      D3["- date: LocalDate"]
+      D4["- customerId: int"]
+      D5["+ getCustomerId()"]
+    end
 
-    class TaskNotifier 
-    {
-        - List~TaskObserver~ observers
-        + addObserver(TaskObserver)
-        + notifyObservers(Task)
-    }
+    subgraph TaskObserver
+      E1["+ notify(Task)"]
+    end
 
-    CRMSystem --> Customer
-    CRMSystem --> Task
-    CRMSystem --> Communication
-    CRMSystem --> TaskNotifier
-    TaskNotifier --> TaskObserver
-    Task --> Customer : linked by customerId
-    Communication --> Customer : linked by customerId
+    subgraph TaskNotifier
+      F1["- List<TaskObserver> observers"]
+      F2["+ addObserver(TaskObserver)"]
+      F3["+ notifyObservers(Task)"]
+    end
+
+    %% Relationships
+    A --> B
+    A --> C
+    A --> D
+    A --> F
+    F --> E
+    C --> B
+    D --> B
 ```
 
 ## Getting started
