@@ -1,5 +1,3 @@
-The rewritten markdown content that would fit at $SELECTION_PLACEHOLDER$ is:
-
 > **Note:** The following Mermaid diagram uses syntax compatible with Mermaid version 10.7.0. If you encounter a syntax error, ensure your Markdown renderer or tool supports at least this version of Mermaid.
 
 # CS1OP-CW1
