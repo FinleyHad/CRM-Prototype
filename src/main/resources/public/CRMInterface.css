@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+p
+{
+  margin: 0.5rem 0;
+  font-size: .9rem;
+  color: #333;
+  text-align: center;
+}
 body 
 {
   font-family: 'Inter', 'Arial', sans-serif;
