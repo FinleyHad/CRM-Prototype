@@ -21,7 +21,7 @@ While creating the advanced program, my assumptions were to use AI as a tool for
 
 Lastly here is the mermaid diagram:
 
-## System Flowchart 
+## System Flowchart and Class chart
 
 ```mermaid
 %%{ init : { "theme" : "default" } }%%
