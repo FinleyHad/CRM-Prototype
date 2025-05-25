@@ -1,3 +1,7 @@
+The rewritten markdown content that would fit at $SELECTION_PLACEHOLDER$ is:
+
+> **Note:** The following Mermaid diagram uses syntax compatible with Mermaid version 10.7.0. If you encounter a syntax error, ensure your Markdown renderer or tool supports at least this version of Mermaid.
+
 # CS1OP-CW1
 
 ## Profile
@@ -11,158 +15,75 @@
 
 ## Diagram
 
-### 🧩 Class Diagram
+### Class Diagram
 
 ```mermaid
 %%{ init : { "theme" : "default" } }%%
 flowchart TD
-    A(["CRMSystem"])
-    B(["Customer"])
-    C(["Task"])
-    D(["Communication"])
-    E(["TaskObserver (interface)"])
-    F(["TaskNotifier"])
+      A(["CRMSystem"])
+      B(["Customer"])
+      C(["Task"])
+      D(["Communication"])
+      E(["TaskObserver (interface)"])
+      F(["TaskNotifier"])
 
-    subgraph CRMSystem Members
-      A1["- List<Customer> customers"]
-      A2["- List<Task> tasks"]
-      A3["- List<Communication> communications"]
-      A4["+ getInstance(): CRMSystem"]
-      A5["+ addCustomer(Customer)"]
-      A6["+ createTask(Task)"]
-      A7["+ createCommunication(Communication)"]
-      A8["+ getCustomers(): List<Customer>"]
-      A9["+ getTasks(): List<Task>"]
-      A10["+ getCommunications(): List<Communication>"]
-      A11["+ registerObserver(TaskObserver)"]
-    end
+      subgraph CRMSystem Members
+        A1["- List<Customer> customers"]
+        A2["- List<Task> tasks"]
+        A3["- List<Communication> communications"]
+        A4["+ getInstance(): CRMSystem"]
+        A5["+ addCustomer(Customer)"]
+        A6["+ createTask(Task)"]
+        A7["+ createCommunication(Communication)"]
+        A8["+ getCustomers(): List<Customer>"]
+        A9["+ getTasks(): List<Task>"]
+        A10["+ getCommunications(): List<Communication>"]
+        A11["+ registerObserver(TaskObserver)"]
+      end
 
-    subgraph Customer
-      B1["- id: int"]
-      B2["- name: String"]
-      B3["- email: String"]
-      B4["- phone: String"]
-      B5["+ getId(), getName(), getEmail(), getPhone()"]
-    end
+      subgraph Customer
+        B1["- id: int"]
+        B2["- name: String"]
+        B3["- email: String"]
+        B4["- phone: String"]
+        B5["+ getId(), getName(), getEmail(), getPhone()"]
+      end
 
-    subgraph Task
-      C1["- description: String"]
-      C2["- dueDate: LocalDate"]
-      C3["- customerId: int"]
-      C4["- completed: boolean"]
-      C5["+ isCompleted(), getDueDate()"]
-    end
+      subgraph Task
+        C1["- description: String"]
+        C2["- dueDate: LocalDate"]
+        C3["- customerId: int"]
+        C4["- completed: boolean"]
+        C5["+ isCompleted(), getDueDate()"]
+      end
 
-    subgraph Communication
-      D1["- type: String"]
-      D2["- content: String"]
-      D3["- date: LocalDate"]
-      D4["- customerId: int"]
-      D5["+ getCustomerId()"]
-    end
+      subgraph Communication
+        D1["- type: String"]
+        D2["- content: String"]
+        D3["- date: LocalDate"]
+        D4["- customerId: int"]
+        D5["+ getCustomerId()"]
+      end
 
-    subgraph TaskObserver
-      E1["+ notify(Task)"]
-    end
+      subgraph TaskObserver
+        E1["+ notify(Task)"]
+      end
 
-    subgraph TaskNotifier
-      F1["- List<TaskObserver> observers"]
-      F2["+ addObserver(TaskObserver)"]
-      F3["+ notifyObservers(Task)"]
-    end
+      subgraph TaskNotifier
+        F1["- List<TaskObserver> observers"]
+        F2["+ addObserver(TaskObserver)"]
+        F3["+ notifyObservers(Task)"]
+      end
 
-    %% Relationships
-    A --> B
-    A --> C
-    A --> D
-    A --> F
-    F --> E
-    C --> B
-    D --> B
-# CS1OP-CW1
-
-## Profile
-- **Module Code:** CS1OP  
-- **Assignment Report Title:** CS1OP-CW1  
-- **Student Number:** 33003767  
-- **Actual Hours Spent:** 30  
-- **AI Tools Used:** OpenAI/ChatGPT and GitHub Copilot  
-
----
-
-## Diagram
-
-### 🧩 Class Diagram
-
-```mermaid
-%%{ init : { "theme" : "default" } }%%
-flowchart TD
-    A(["CRMSystem"])
-    B(["Customer"])
-    C(["Task"])
-    D(["Communication"])
-    E(["TaskObserver (interface)"])
-    F(["TaskNotifier"])
-
-    subgraph CRMSystem Members
-      A1["- List<Customer> customers"]
-      A2["- List<Task> tasks"]
-      A3["- List<Communication> communications"]
-      A4["+ getInstance(): CRMSystem"]
-      A5["+ addCustomer(Customer)"]
-      A6["+ createTask(Task)"]
-      A7["+ createCommunication(Communication)"]
-      A8["+ getCustomers(): List<Customer>"]
-      A9["+ getTasks(): List<Task>"]
-      A10["+ getCommunications(): List<Communication>"]
-      A11["+ registerObserver(TaskObserver)"]
-    end
-
-    subgraph Customer
-      B1["- id: int"]
-      B2["- name: String"]
-      B3["- email: String"]
-      B4["- phone: String"]
-      B5["+ getId(), getName(), getEmail(), getPhone()"]
-    end
-
-    subgraph Task
-      C1["- description: String"]
-      C2["- dueDate: LocalDate"]
-      C3["- customerId: int"]
-      C4["- completed: boolean"]
-      C5["+ isCompleted(), getDueDate()"]
-    end
-
-    subgraph Communication
-      D1["- type: String"]
-      D2["- content: String"]
-      D3["- date: LocalDate"]
-      D4["- customerId: int"]
-      D5["+ getCustomerId()"]
-    end
-
-    subgraph TaskObserver
-      E1["+ notify(Task)"]
-    end
-
-    subgraph TaskNotifier
-      F1["- List<TaskObserver> observers"]
-      F2["+ addObserver(TaskObserver)"]
-      F3["+ notifyObservers(Task)"]
-    end
-
-    %% Relationships
-    A --> B
-    A --> C
-    A --> D
-    A --> F
-    F --> E
-    C --> B
-    D --> B
+      %% Relationships
+      A --> B
+      A --> C
+      A --> D
+      A --> F
+      F --> E
+      C --> B
+      D --> B
 ```
-
-## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
