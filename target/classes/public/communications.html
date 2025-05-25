@@ -5,21 +5,34 @@
   <title>Communication Log</title>
   <link rel="stylesheet" href="CRMInterface.css">
 
-  <!-- Seperate formating for the communication log -->
+  <!-- Styling for communication log layout and sorting -->
   <style>
-    .chat-bubble {
+    .chat-bubble 
+    {
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
       margin-bottom: 10px;
       background: #f9f9f9;
     }
-    .meta {
+    .meta 
+    {
       font-size: 0.9em;
       color: gray;
     }
+    .sort-row 
+    {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .sort-row p 
+    {
+      margin: 0;
+      font-weight: bold;
+    }
   </style>
-
 </head>
 <body>
   <div class="container">
@@ -36,6 +49,13 @@
 
     <!-- Form to add a new communication -->
     <h2>Add Communication</h2>
+    <div class="sort-row">
+      <p>Customer (A–Z)</p>
+      <select id="sortDirection" onchange="loadCustomers('commCustomerId')">
+        <option value="asc">A–Z</option>
+        <option value="desc">Z–A</option>
+      </select>
+    </div>
     <select id="commCustomerId"></select>
     <input id="commType" placeholder="Type (email, call)">
     <input id="commContent" placeholder="Content">
@@ -49,9 +69,16 @@
 
   <!-- JavaScript to handle loading customers and communications -->
   <script>
-    async function loadCustomers(selectId) {
+    // Load customers sorted A–Z or Z–A
+    async function loadCustomers(selectId) 
+    {
       const res = await fetch('/api/customers');
       const data = await res.json();
+
+      const sortDirection = document.getElementById('sortDirection')?.value || 'asc';
+      data.sort((a, b) => a.name.localeCompare(b.name));
+      if (sortDirection === 'desc') data.reverse();
+
       const select = document.getElementById(selectId);
       select.innerHTML = '';
 
@@ -63,10 +90,11 @@
       });
     }
 
-    // Function to add a new communication from the form
-    async function addCommunication() {
-      const type = document.getElementById('commType').value;
-      const content = document.getElementById('commContent').value;
+    // Add a new communication
+    async function addCommunication() 
+    {
+      const type = document.getElementById('commType').value.trim();
+      const content = document.getElementById('commContent').value.trim();
       const date = document.getElementById('commDate').value;
       const customerId = parseInt(document.getElementById('commCustomerId').value);
 
@@ -84,23 +112,17 @@
       loadCommunications();
     }
 
-    // Function to load and display the list of communications from the server
-    async function loadCommunications() {
-      console.log("Fetching communications...");
-      
+    // Load and render communication list
+    async function loadCommunications() 
+    {
       const res = await fetch('/api/communications');
       const data = await res.json();
-      console.log("Received communications:", data);
 
       const list = document.getElementById('commList');
-      if (!list) {
-        console.error("ERROR: Element with id 'commList' not found in DOM.");
-        return;
-      }
-
       list.innerHTML = '';
 
-      if (!data || data.length === 0) {
+      if (!data || data.length === 0) 
+      {
         list.innerHTML = '<p>No communications found.</p>';
         return;
       }
@@ -117,14 +139,12 @@
       });
     }
 
-    // Load customers and communications when the page loads
+    // Initial load
     window.onload = () => 
     {
-      console.log("Page loaded");
       loadCustomers('commCustomerId');
       loadCommunications();
     };
-
   </script>
 </body>
 </html>

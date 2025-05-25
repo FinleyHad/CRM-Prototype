@@ -14,15 +14,73 @@ Which Artificial Intelligence tools used (if applicable):
 ## Diagram
 
 ```mermaid
----
-config:
-      theme: redux
----
-flowchart TD
-        A(["Start"])
-        A --> B{"Decision"}
-        B --> C["Option A"]
-        B --> D["Option B"]
+classDiagram
+    class CRMSystem 
+    {
+        - List~Customer~ customers
+        - List~Task~ tasks
+        - List~Communication~ communications
+        + getInstance() CRMSystem
+        + addCustomer(Customer)
+        + createTask(Task)
+        + createCommunication(Communication)
+        + getCustomers() List~Customer~
+        + getTasks() List~Task~
+        + getCommunications() List~Communication~
+        + registerObserver(TaskObserver)
+    }
+
+    class Customer 
+    {
+        - int id
+        - String name
+        - String email
+        - String phone
+        + getId()
+        + getName()
+        + getEmail()
+        + getPhone()
+    }
+
+    class Task 
+    {
+        - String description
+        - LocalDate dueDate
+        - int customerId
+        - boolean completed
+        + isCompleted()
+        + getDueDate()
+    }
+
+    class Communication 
+    {
+        - String type
+        - String content
+        - LocalDate date
+        - int customerId
+        + getCustomerId()
+    }
+
+    class TaskObserver 
+    {
+        <<interface>>
+        + notify(Task)
+    }
+
+    class TaskNotifier 
+    {
+        - List~TaskObserver~ observers
+        + addObserver(TaskObserver)
+        + notifyObservers(Task)
+    }
+
+    CRMSystem --> Customer
+    CRMSystem --> Task
+    CRMSystem --> Communication
+    CRMSystem --> TaskNotifier
+    TaskNotifier --> TaskObserver
+    Task --> Customer : linked by customerId
+    Communication --> Customer : linked by customerId
 ```
 
 ## Getting started

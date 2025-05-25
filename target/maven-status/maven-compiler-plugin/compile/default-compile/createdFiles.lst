@@ -1,10 +1,11 @@
 com\crm\TaskNotifier.class
+public\tasks.html
 com\crm\Main$1.class
-com\crm\Customer.class
+public\customers.html
 com\crm\Task.class
 com\crm\TaskObserver.class
 com\crm\Main.class
+public\index.HTML
 com\crm\Report.class
-com\crm\Communication.class
-com\crm\EntityFactory.class
-com\crm\CRMSystem.class
+public\CRMInterface.css
+public\communications.html

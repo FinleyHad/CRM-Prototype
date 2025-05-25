@@ -156,5 +156,18 @@ public class Main {
 
         //Gives the terminal the link to the web page
         System.out.println("CRM system running at http://localhost:4567");
+
+        //Filter customers by query string
+        get("/api/customers/search", (req, res) -> {
+            String query = req.queryParams("q");
+            res.type("application/json");
+
+            List<Customer> allCustomers = crm.getCustomers();
+            List<Customer> filtered = CustomerFilter.filter(allCustomers, query);
+
+            return gson.toJson(filtered);
+        });
+
     }
+    
 }

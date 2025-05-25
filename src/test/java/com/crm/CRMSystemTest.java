@@ -1,6 +1,7 @@
 package com.crm;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,7 +53,6 @@ class CRMSystemTest {
         Communication comm = new Communication("email", "Hello", LocalDate.now(), customer.getId());
         crm.createCommunication(comm);
         assertEquals(1, crm.getCommunications().size());
-
     }
 
     // Test to ensure the CRM system throws an exception when trying to create a communication for a non-existing customer
@@ -110,4 +110,19 @@ class CRMSystemTest {
         String report = crm.generateReport().toString();
         assertTrue(report.contains("Total Communications: 1"));
     }
+
+    // Test to ensure the CRM system can filter customers by name
+    @Test
+    void testCustomerFilterByEmail() 
+    {
+        List<Customer> customers = List.of(
+            new Customer("John Doe", "john@example.com", "123"),
+            new Customer("Jane Smith", "jane@domain.com", "456")
+        );
+
+        List<Customer> result = CustomerFilter.filter(customers, "jane");
+        assertEquals(1, result.size());
+        assertEquals("Jane Smith", result.get(0).getName());
+    }
+
 }

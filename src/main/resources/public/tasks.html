@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Task Management</title>
   <link rel="stylesheet" href="CRMInterface.css">
-
   <style>
     ul#taskList 
     {
@@ -18,14 +17,22 @@
       background: #f9f9f9;
       margin-bottom: 5px;
     }
+    .sort-row 
+    {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .sort-row p 
+    {
+      margin: 0;
+      font-weight: bold;
+    }
   </style>
-
 </head>
-
 <body>
   <div class="container">
-
-    <!-- Navigation bar -->
     <h1>Task Management</h1>
     <nav>
       <ul>
@@ -39,6 +46,13 @@
     <section>
       <h2>Add Task</h2>
       <div class="form-group">
+        <div class="sort-row">
+          <p>Customer (A–Z)</p>
+          <select id="sortDirection" onchange="loadCustomers('taskCustomerId')">
+            <option value="asc">A–Z</option>
+            <option value="desc">Z–A</option>
+          </select>
+        </div>
         <select id="taskCustomerId"></select>
         <input id="taskDesc" placeholder="Task Description">
         <input id="taskDue" type="date" placeholder="Due Date">
@@ -53,12 +67,17 @@
     </section>
   </div>
 
-  <!-- JavaScript to handle loading customers and tasks -->
   <script>
+    // Load customers into dropdown sorted A–Z or Z–A
     async function loadCustomers(selectId) 
     {
       const res = await fetch('/api/customers');
-      const data = await res.json();
+      let data = await res.json();
+
+      const direction = document.getElementById("sortDirection")?.value || "asc";
+      data.sort((a, b) => a.name.localeCompare(b.name));
+      if (direction === "desc") data.reverse();
+
       const select = document.getElementById(selectId);
       select.innerHTML = '';
 
@@ -70,14 +89,14 @@
       });
     }
 
+    // Add new task
     async function addTask() 
     {
       const description = document.getElementById('taskDesc').value;
       const dueDate = document.getElementById('taskDue').value;
       const customerId = parseInt(document.getElementById('taskCustomerId').value);
 
-      if (!description || !dueDate || isNaN(customerId)) 
-      {
+      if (!description || !dueDate || isNaN(customerId)) {
         alert('Please fill out all fields.');
         return;
       }
@@ -91,6 +110,7 @@
       loadTasks();
     }
 
+    // Load task list
     async function loadTasks() 
     {
       const res = await fetch('/api/tasks');
@@ -98,8 +118,7 @@
       const list = document.getElementById('taskList');
       list.innerHTML = '';
 
-      if (data.length === 0) 
-      {
+      if (data.length === 0) {
         list.innerHTML = '<li>No tasks found.</li>';
         return;
       }
@@ -111,8 +130,7 @@
       });
     }
 
-
-    // Load customers and tasks when the page loads
+    // Initialize page
     window.onload = () => {
       loadCustomers('taskCustomerId');
       loadTasks();
