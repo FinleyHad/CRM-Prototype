@@ -1,25 +1,102 @@
 # CS1OP-CW1
 
 ## Profile
-Module Code:  CS1OP
+- **Module Code:** CS1OP  
+- **Assignment Report Title:** CS1OP-CW1  
+- **Student Number:** 33003767  
+- **Actual Hours Spent:** 30  
+- **AI Tools Used:** OpenAI/ChatGPT and GitHub Copilot  
 
-Assignment report Title:CS1OP-CW1
-
-Student Number (33003767):
-
-Actual hrs spent for the assignment: 30
-
-Which Artificial Intelligence tools used (if applicable):OpenAI/ChaGPT and 
+---
 
 ## Diagram
 
+### 🧩 Class Diagram
+
 ```mermaid
----
-config:
-      theme: redux
----
+%%{ init : { "theme" : "default" } }%%
 flowchart TD
-        flowchart TD
+    A(["CRMSystem"])
+    B(["Customer"])
+    C(["Task"])
+    D(["Communication"])
+    E(["TaskObserver (interface)"])
+    F(["TaskNotifier"])
+
+    subgraph CRMSystem Members
+      A1["- List<Customer> customers"]
+      A2["- List<Task> tasks"]
+      A3["- List<Communication> communications"]
+      A4["+ getInstance(): CRMSystem"]
+      A5["+ addCustomer(Customer)"]
+      A6["+ createTask(Task)"]
+      A7["+ createCommunication(Communication)"]
+      A8["+ getCustomers(): List<Customer>"]
+      A9["+ getTasks(): List<Task>"]
+      A10["+ getCommunications(): List<Communication>"]
+      A11["+ registerObserver(TaskObserver)"]
+    end
+
+    subgraph Customer
+      B1["- id: int"]
+      B2["- name: String"]
+      B3["- email: String"]
+      B4["- phone: String"]
+      B5["+ getId(), getName(), getEmail(), getPhone()"]
+    end
+
+    subgraph Task
+      C1["- description: String"]
+      C2["- dueDate: LocalDate"]
+      C3["- customerId: int"]
+      C4["- completed: boolean"]
+      C5["+ isCompleted(), getDueDate()"]
+    end
+
+    subgraph Communication
+      D1["- type: String"]
+      D2["- content: String"]
+      D3["- date: LocalDate"]
+      D4["- customerId: int"]
+      D5["+ getCustomerId()"]
+    end
+
+    subgraph TaskObserver
+      E1["+ notify(Task)"]
+    end
+
+    subgraph TaskNotifier
+      F1["- List<TaskObserver> observers"]
+      F2["+ addObserver(TaskObserver)"]
+      F3["+ notifyObservers(Task)"]
+    end
+
+    %% Relationships
+    A --> B
+    A --> C
+    A --> D
+    A --> F
+    F --> E
+    C --> B
+    D --> B
+# CS1OP-CW1
+
+## Profile
+- **Module Code:** CS1OP  
+- **Assignment Report Title:** CS1OP-CW1  
+- **Student Number:** 33003767  
+- **Actual Hours Spent:** 30  
+- **AI Tools Used:** OpenAI/ChatGPT and GitHub Copilot  
+
+---
+
+## Diagram
+
+### 🧩 Class Diagram
+
+```mermaid
+%%{ init : { "theme" : "default" } }%%
+flowchart TD
     A(["CRMSystem"])
     B(["Customer"])
     C(["Task"])
