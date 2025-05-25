@@ -92,12 +92,10 @@ flowchart TD
 ```
 
 ## System Architecture
-
 ```mermaid
-%%{ init : { "theme" : "default" } }%%
 flowchart TD
     A[User / Browser]
-    B[HTML / CSS UI]
+    B[HTML & CSS UI]
     C[JavaScript Frontend Logic]
     D[Spark Java API (Main.java)]
     E[CRMSystem.java (Singleton)]
@@ -112,3 +110,4 @@ flowchart TD
     E --> F
     E --> G
     D --> H
+```
