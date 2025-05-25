@@ -21,6 +21,8 @@ While creating the advanced program, my assumptions were to use AI as a tool for
 
 Lastly here is the mermaid diagram:
 
+## System Flowchart 
+
 ```mermaid
 %%{ init : { "theme" : "default" } }%%
 flowchart TD
@@ -88,3 +90,25 @@ flowchart TD
       C --> B
       D --> B
 ```
+
+## System Architecture
+
+```mermaid
+%%{ init : { "theme" : "default" } }%%
+flowchart TD
+    A[User / Browser]
+    B[HTML / CSS UI]
+    C[JavaScript Frontend Logic]
+    D[Spark Java API (Main.java)]
+    E[CRMSystem.java (Singleton)]
+    F[Customer / Task / Communication Classes]
+    G[TaskNotifier & Observer Pattern]
+    H[JUnit Tests]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    E --> G
+    D --> H
