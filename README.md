@@ -20,11 +20,6 @@ On the frontend, the user can access Customer, Task, and Communication pages to 
 While creating the advanced program, my assumptions were to use AI as a tool for learning and development. I assumed that all pages could be reviewed and supported by AI for extended assistance. I also assumed that an HTML interface could be used effectively with the help of Maven.
 
 Lastly here is the mermaid diagram:
----
-
-## Diagram
-
-### Class Diagram
 
 ```mermaid
 %%{ init : { "theme" : "default" } }%%
