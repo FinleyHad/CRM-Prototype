@@ -92,14 +92,13 @@ flowchart TD
 ```
 
 ## System Architecture
-```mermaid
 flowchart TD
     A[User / Browser]
     B[HTML & CSS UI]
     C[JavaScript Frontend Logic]
     D[Spark Java API (Main.java)]
     E[CRMSystem.java (Singleton)]
-    F[Customer / Task / Communication Classes]
+    F[Customer, Task, Communication Classes]
     G[TaskNotifier & Observer Pattern]
     H[JUnit Tests]
 
@@ -110,4 +109,3 @@ flowchart TD
     E --> F
     E --> G
     D --> H
-```
