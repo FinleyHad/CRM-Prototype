@@ -3,9 +3,6 @@
 # CS1OP-CW1
 
 ## Profile
-- **Module Code:** CS1OP  
-- **Assignment Report Title:** CS1OP-CW1  
-- **Student Number:** 33003767  
 - **Actual Hours Spent:** 30  
 - **AI Tools Used:** OpenAI/ChatGPT and GitHub Copilot  
 
