@@ -9,7 +9,79 @@
 - **Actual Hours Spent:** 30  
 - **AI Tools Used:** OpenAI/ChatGPT and GitHub Copilot  
 
-**Note to run the program on one line use: mvn -f "pom.xml" clean compile, and the next: mvn -f "pom.xml" exec:java**
+## How to Run the CRM
+
+### Prerequisites
+- Java 21 or higher
+- Maven 3.x
+- A web browser
+
+### Running the Application
+
+1. **Set JAVA_HOME** (if not already set):
+   ```powershell
+   $env:JAVA_HOME = "C:\Program Files\Java\jdk-21"
+   ```
+
+2. **Navigate to the project directory**:
+   ```powershell
+   cd path\to\cs1op-cw1
+   ```
+
+3. **Run the application**:
+   ```bash
+   mvn exec:java
+   ```
+
+   **Alternative (compile first, then run)**:
+   ```bash
+   mvn clean compile
+   mvn exec:java
+   ```
+
+4. **Access the application**:
+   - Open your web browser and go to: **http://localhost:4567**
+
+5. **Stop the application**:
+   - Press `Ctrl+C` in the terminal
+
+---
+
+## How to Navigate the System
+
+Once the application is running, you can access different pages:
+
+### **Main Dashboard** (`http://localhost:4567`)
+- Landing page with navigation to all features
+- Overview of the CRM system
+
+### **Customer Management** (`/customers.html`)
+- **View all customers** in a list format
+- **Add new customers** with name, email, and phone
+- **Delete customers** by clicking the delete button
+- **Search customers** using the search functionality
+
+### **Task Management** (`/tasks.html`)
+- **View all tasks** with descriptions, due dates, and status
+- **Create new tasks** linked to specific customers
+- **Track task completion** and overdue tasks
+- Tasks are automatically linked to customer records
+
+### **Communication Tracking** (`/communications.html`)
+- **Log communications** (email, phone call, meeting)
+- **View communication history** with timestamps
+- **Filter communications** by customer
+- Communications are automatically added to customer notes
+
+### **Generate Reports** (API endpoint)
+- Access via: `http://localhost:4567/api/report`
+- View system statistics including:
+  - Total customers
+  - Total and completed tasks
+  - Overdue tasks
+  - Total communications
+
+---
 
 **Implementation Highlights**
 
@@ -19,93 +91,135 @@ On the frontend, the user can access Customer, Task, and Communication pages to 
 
 While creating the advanced program, my assumptions were to use AI as a tool for learning and development. I assumed that all pages could be reviewed and supported by AI for extended assistance. I also assumed that an HTML interface could be used effectively with the help of Maven.
 
-Lastly here is the mermaid diagram:
+---
 
-## System Flowchart and Class chart
+## System Diagrams
+
+### Class Diagram
 
 ```mermaid
-%%{ init : { "theme" : "default" } }%%
-flowchart TD
-      A(["CRMSystem"])
-      B(["Customer"])
-      C(["Task"])
-      D(["Communication"])
-      E(["TaskObserver (interface)"])
-      F(["TaskNotifier"])
+classDiagram
+    class CRMSystem {
+        -List~Customer~ customers
+        -List~Task~ tasks
+        -List~Communication~ communications
+        -TaskNotifier taskNotifier
+        +getInstance() CRMSystem
+        +addCustomer(Customer)
+        +createTask(Task)
+        +createCommunication(Communication)
+        +getCustomers() List~Customer~
+        +getTasks() List~Task~
+        +getCommunications() List~Communication~
+        +registerObserver(TaskObserver)
+        +generateReport() Report
+    }
 
-      subgraph CRMSystem Members
-        A1["- List<Customer> customers"]
-        A2["- List<Task> tasks"]
-        A3["- List<Communication> communications"]
-        A4["+ getInstance(): CRMSystem"]
-        A5["+ addCustomer(Customer)"]
-        A6["+ createTask(Task)"]
-        A7["+ createCommunication(Communication)"]
-        A8["+ getCustomers(): List<Customer>"]
-        A9["+ getTasks(): List<Task>"]
-        A10["+ getCommunications(): List<Communication>"]
-        A11["+ registerObserver(TaskObserver)"]
-      end
+    class Customer {
+        -int id
+        -String name
+        -String email
+        -String phone
+        -List~String~ notes
+        +getId() int
+        +getName() String
+        +getEmail() String
+        +getPhone() String
+        +addNote(String)
+    }
 
-      subgraph Customer
-        B1["- id: int"]
-        B2["- name: String"]
-        B3["- email: String"]
-        B4["- phone: String"]
-        B5["+ getId(), getName(), getEmail(), getPhone()"]
-      end
+    class Task {
+        -int id
+        -String description
+        -LocalDate dueDate
+        -int customerId
+        -boolean completed
+        +getId() int
+        +getDescription() String
+        +getDueDate() LocalDate
+        +getCustomerId() int
+        +isCompleted() boolean
+        +completeTask()
+    }
 
-      subgraph Task
-        C1["- description: String"]
-        C2["- dueDate: LocalDate"]
-        C3["- customerId: int"]
-        C4["- completed: boolean"]
-        C5["+ isCompleted(), getDueDate()"]
-      end
+    class Communication {
+        -int id
+        -String type
+        -String content
+        -LocalDate date
+        -int customerId
+        +getId() int
+        +getType() String
+        +getContent() String
+        +getDate() LocalDate
+        +getCustomerId() int
+    }
 
-      subgraph Communication
-        D1["- type: String"]
-        D2["- content: String"]
-        D3["- date: LocalDate"]
-        D4["- customerId: int"]
-        D5["+ getCustomerId()"]
-      end
+    class TaskObserver {
+        <<interface>>
+        +notify(Task)
+    }
 
-      subgraph TaskObserver
-        E1["+ notify(Task)"]
-      end
+    class TaskNotifier {
+        -List~TaskObserver~ observers
+        +addObserver(TaskObserver)
+        +notifyObservers(Task)
+    }
 
-      subgraph TaskNotifier
-        F1["- List<TaskObserver> observers"]
-        F2["+ addObserver(TaskObserver)"]
-        F3["+ notifyObservers(Task)"]
-      end
+    class Report {
+        -String content
+        +generate() String
+        +print()
+    }
 
-      %% Relationships
-      A --> B
-      A --> C
-      A --> D
-      A --> F
-      F --> E
-      C --> B
-      D --> B
+    CRMSystem "1" --> "*" Customer : manages
+    CRMSystem "1" --> "*" Task : manages
+    CRMSystem "1" --> "*" Communication : manages
+    CRMSystem "1" --> "1" TaskNotifier : uses
+    TaskNotifier "1" --> "*" TaskObserver : notifies
+    Task "*" --> "1" Customer : assigned to
+    Communication "*" --> "1" Customer : related to
+    CRMSystem ..> Report : generates
 ```
 
-## System Architecture
-flowchart TD
-    A[User / Browser]
-    B[HTML & CSS UI]
-    C[JavaScript Frontend Logic]
-    D[Spark Java API (Main.java)]
-    E[CRMSystem.java (Singleton)]
-    F[Customer, Task, Communication Classes]
-    G[TaskNotifier & Observer Pattern]
-    H[JUnit Tests]
+### System Architecture Flowchart
+
+```mermaid
+flowchart TB
+    subgraph Frontend["Frontend Layer"]
+        A[User/Browser]
+        B[HTML & CSS UI]
+        C[JavaScript Logic]
+    end
+
+    subgraph Backend["Backend Layer"]
+        D[Spark Java API<br/>Main.java]
+        E[CRMSystem<br/>Singleton]
+    end
+
+    subgraph Domain["Domain Layer"]
+        F1[Customer]
+        F2[Task]
+        F3[Communication]
+    end
+
+    subgraph Patterns["Design Patterns"]
+        G[TaskNotifier &<br/>Observer Pattern]
+        I[EntityFactory<br/>Factory Pattern]
+    end
+
+    subgraph Testing["Testing Layer"]
+        H[JUnit Tests]
+    end
 
     A --> B
     B --> C
     C --> D
     D --> E
-    E --> F
+    E --> F1
+    E --> F2
+    E --> F3
     E --> G
-    D --> H
+    E --> I
+    D -.tests.-> H
+```
