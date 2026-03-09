@@ -1,4 +1,34 @@
 > **Note:** The following Mermaid diagram uses syntax compatible with Mermaid version 10.7.0. If you encounter a syntax error, ensure your Markdown renderer or tool supports at least this version of Mermaid.
+> 
+# Java Customer Relationship Management (CRM) System
+
+Course project for Software Engineering demonstrating the design and implementation of a modular **Customer Relationship Management (CRM) system** built in Java.
+
+The system applies object-oriented design principles and several common **software design patterns** to manage customer data and communication workflows in a structured and scalable way.
+
+## Key Concepts Implemented
+
+- Object-Oriented Programming (OOP)
+- Modular software architecture
+- Design patterns for maintainability and scalability
+
+### Design Patterns Used
+
+**Singleton Pattern**
+
+Ensures a single instance of the CRM system manages global application state.
+
+**Factory Pattern**
+
+Handles the creation of CRM objects such as customers, tasks, and communications.
+
+**Observer Pattern**
+
+Allows system components to react to changes in customer data or communication updates.
+
+---
+
+# Repository Structure
 
 # CS1OP-CW1
 
